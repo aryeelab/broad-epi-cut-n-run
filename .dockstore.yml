@@ -1,0 +1,10 @@
+version: 1.2
+workflows:
+   - name: "Cut-and-Run"
+     subclass: WDL
+     primaryDescriptorPath: /cut-and-run.wdl
+     filters:  # Only develop or master branches and localAligner/** tags
+         branches:
+             - main
+         tags:
+             - /.*/
