@@ -20,7 +20,7 @@ task cutnrun_viz {
         String? prefix
     }
 
-    Float input_file_size_gb = size(fastq_R1, "G")
+    Float input_file_size_gb = size(bedpe, "G")
     # This is almost fixed for either mouse or human genome
     Int mem_gb = memory_gb
     #Int disk_gb = round(20.0 + 4 * input_file_size_gb)
