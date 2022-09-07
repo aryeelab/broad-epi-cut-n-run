@@ -28,7 +28,7 @@ task cutnrun_trim {
 
 
     command {
-    	bash run-trim.sh ${fastq_R1} ${fastq_R2} ${cpus} ${default="cutnrun" prefix} .
+        bash run-trim.sh ${fastq_R1} ${fastq_R2} ${cpus} ${default="cutnrun" prefix} .
     }
 
     output {
@@ -67,6 +67,5 @@ task cutnrun_trim {
                 default: 16
             }
     }
-
 
 }
