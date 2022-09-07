@@ -42,7 +42,7 @@ task cutnrun_align {
         genome_prefix=$(basename $(find . -type f -name "*.rev.1.bt2") .rev.1.bt2)
 
 
-	bowtie2 --dovetail \
+        bowtie2 --dovetail \
             -p ${cpus} \
             -x $genome_prefix \
             -1 ${sep="," fastq_R1} \
@@ -112,6 +112,5 @@ task cutnrun_align {
                 example: ['put link to gcr or dockerhub']
             }
     }
-
 
 }

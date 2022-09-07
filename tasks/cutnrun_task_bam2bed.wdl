@@ -27,12 +27,12 @@ task cutnrun_bam2bed {
 
 
     command {
-    	bash run-trim.sh ${default="cutnrun" prefix} . ${bam}
+        bash run-trim.sh ${default="cutnrun" prefix} . ${bam}
     }
 
     output {
         File bedpe = glob('./*bedpe.gz')[0]
-	File clean_bam = glob('./*dedup.sorted.tmp.bam')[0]
+        File clean_bam = glob('./*dedup.sorted.tmp.bam')[0]
     }
 
     runtime {
@@ -54,6 +54,5 @@ task cutnrun_bam2bed {
                 examples: 'MyExperiment'
             }
     }
-
 
 }

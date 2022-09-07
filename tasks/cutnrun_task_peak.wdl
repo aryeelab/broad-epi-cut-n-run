@@ -16,9 +16,9 @@ task cutnrun_peak {
         Int? memory_gb = 16
         File bedgraph_input
         File bedgraph_ctrl
-	Stirng? normalization = "norm"
-	String? stringency = "relaxed"
-	String docker_image = "4dndcic/cut-and-run-pipeline:v1"
+        Stirng? normalization = "norm"
+        String? stringency = "relaxed"
+        String docker_image = "4dndcic/cut-and-run-pipeline:v1"
         String? prefix
     }
 
@@ -30,12 +30,12 @@ task cutnrun_peak {
 
 
     command {
-    	bash run-peak.sh ${bedgraph_input} ${bedgraph_ctrl} ${normalization} ${stringency} ${default="cutnrun" prefix} .
+        bash run-peak.sh ${bedgraph_input} ${bedgraph_ctrl} ${normalization} ${stringency} ${default="cutnrun" prefix} .
     }
 
     output {
         File bedgraph_peak_norm = glob('./*.bedgraph.gz')[0]
-	File narrow_peak = glob('./*.bed.gz')[0]
+        File narrow_peak = glob('./*.bed.gz')[0]
     }
 
     runtime {
@@ -44,6 +44,5 @@ task cutnrun_peak {
         disks : 'local-disk ${disk_gb} SSD'
         docker : docker_image
     }
-
 
 }

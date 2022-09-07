@@ -15,8 +15,8 @@ task cutnrun_viz {
         Int? cpus = 1
         Int? memory_gb = 16
         File bedpe
-	File chr_sizes
-	String docker_image = "4dndcic/cut-and-run-pipeline:v1"
+    File chr_sizes
+    String docker_image = "4dndcic/cut-and-run-pipeline:v1"
         String? prefix
     }
 
@@ -28,12 +28,12 @@ task cutnrun_viz {
 
 
     command {
-    	bash run-viz.sh ${bedpe} ${chr_sizes} '' ${default="cutnrun" prefix} .
+        bash run-viz.sh ${bedpe} ${chr_sizes} '' ${default="cutnrun" prefix} .
     }
 
     output {
         File bedgraph = glob('./*.bedgraph.gz')[0]
-	File bigwig = glob('./*.bw')[0]
+    File bigwig = glob('./*.bw')[0]
     }
 
     runtime {
@@ -42,6 +42,5 @@ task cutnrun_viz {
         disks : 'local-disk ${disk_gb} SSD'
         docker : docker_image
     }
-
 
 }
