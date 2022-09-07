@@ -1,10 +1,10 @@
 version 1.0
 
-import "tasks/cutnrun_trim.wdl" as cutnrun_task_trim
-import "tasks/cutnrun_bowtie2.wdl" as cutnrun_task_align
-import "tasks/cutnrun_bam2bed.wdl" as cutnrun_task_bam2bed
-import "tasks/cutnrun_viz.wdl" as cutnrun_task_visualization
-import "tasks/cutnrun_peak.wdl" as cutnrun_task_peak_calling
+import "tasks/cutnrun_task_trim.wdl" as cutnrun_task_trim
+import "tasks/cutnrun_task_bowtie2.wdl" as cutnrun_task_align
+import "tasks/cutnrun_task_bam2bed.wdl" as cutnrun_task_bam2bed
+import "tasks/cutnrun_task_viz.wdl" as cutnrun_task_visualization
+import "tasks/cutnrun_task_peak.wdl" as cutnrun_task_peak_calling
 
 workflow wf_cut_and_run {
 	meta {
