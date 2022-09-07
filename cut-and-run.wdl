@@ -81,7 +81,7 @@ workflow wf_cut_and_run {
     call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
         input:
             bedgraph_input = target_track_generation.bedgraph,
-            bedgraph_control = ctrl_track_generation.bedgraph,
+            bedgraph_ctrl = ctrl_track_generation.bedgraph,
             normalization = normalization,
             stringency = stringency,
             prefix = prefix
