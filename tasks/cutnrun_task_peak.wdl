@@ -16,7 +16,7 @@ task cutnrun_peak {
         Int? memory_gb = 16
         File bedgraph_input
         File bedgraph_ctrl
-        Stirng? normalization = "norm"
+        String? normalization = "norm"
         String? stringency = "relaxed"
         String docker_image = "4dndcic/cut-and-run-pipeline:v1"
         String? prefix
