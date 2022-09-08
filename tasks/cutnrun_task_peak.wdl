@@ -16,6 +16,7 @@ task cutnrun_peak {
         Int? memory_gb = 16
         File bedgraph_input
         File bedgraph_ctrl
+        File chrom_sizes
         String? normalization = "norm"
         String? stringency = "relaxed"
         String docker_image = "4dndcic/cut-and-run-pipeline:v1"
@@ -30,11 +31,13 @@ task cutnrun_peak {
 
 
     command {
-        bash run-peak.sh ${bedgraph_input} ${bedgraph_ctrl} ${normalization} ${stringency} ${default="cutnrun" prefix} .
+        bash run-peak.sh ${bedgraph_input} ${bedgraph_ctrl} ${normalization} ${stringency} ${default="cutnrun" prefix}.peak .
+        /usr/local/bin/bedGraphToBigWig ${prefix}.bedgraph ${chr_sizes} ${prefix}.peak.bw
     }
 
     output {
         File bedgraph_peak_norm = glob('./*.bedgraph.gz')[0]
+        File bw_peak_norm = glob('./*.bw')[0]
         File narrow_peak = glob('./*.bed.gz')[0]
     }
 

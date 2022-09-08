@@ -23,6 +23,7 @@ workflow wf_cut_and_run {
         String? normalization = "norm"
         String? stringency = "relaxed"
         String prefix = "cutnrun-sample"
+        String prefix-ctrl = "cutnrun-ctrl"
         String genome_name
         String? docker
     }
@@ -49,7 +50,7 @@ workflow wf_cut_and_run {
             fastq_R2 = ctrl_fastq_R2,
             genome_index = idx_tar,
             genome_name = genome_name,
-            prefix = prefix
+            prefix = prefix-ctrl
     }
 
         call cutnrun_task_bam2bed.cutnrun_bam2bed as target_bam2bed {
@@ -61,7 +62,7 @@ workflow wf_cut_and_run {
         call cutnrun_task_bam2bed.cutnrun_bam2bed as ctrl_bam2bed {
            input:
             bam = ctrl_align.cutnrun_alignment,
-            prefix = prefix
+            prefix = prefix-ctrl
         }
 
     call cutnrun_task_visualization.cutnrun_viz as target_track_generation {
@@ -75,13 +76,14 @@ workflow wf_cut_and_run {
         input:
             bedpe = ctrl_bam2bed.bedpe,
             chr_sizes = chrom_sizes,
-            prefix = prefix
+            prefix = prefix-ctrl
     }
 
     call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
         input:
             bedgraph_input = target_track_generation.bedgraph,
             bedgraph_ctrl = ctrl_track_generation.bedgraph,
+            chr_sizes = chrom_sizes,
             normalization = normalization,
             stringency = stringency,
             prefix = prefix
@@ -90,20 +92,21 @@ workflow wf_cut_and_run {
         output {
             File target_alignment_bam = target_align.cutnrun_alignment
             File target_alignment_log = target_align.cutnrun_alignment_log
-        File target_bedpe = target_bam2bed.bedpe
-        File target_cleaned_bam = target_bam2bed.clean_bam
+            File target_bedpe = target_bam2bed.bedpe
+            File target_cleaned_bam = target_bam2bed.clean_bam
             File target_bedgrapgh = target_track_generation.bedgraph
             File target_bigwig = target_track_generation.bigwig
 
             File ctrl_alignment_bam = ctrl_align.cutnrun_alignment
             File ctrl_alignment_log = ctrl_align.cutnrun_alignment_log
-        File ctrl_bedpe = ctrl_bam2bed.bedpe
-        File ctrl_cleaned_bam = ctrl_bam2bed.clean_bam
+            File ctrl_bedpe = ctrl_bam2bed.bedpe
+            File ctrl_cleaned_bam = ctrl_bam2bed.clean_bam
             File ctrl_bedgrapgh = ctrl_track_generation.bedgraph
             File ctrl_bigwig = ctrl_track_generation.bigwig
 
-        File narrow_peak = peak_calling.narrow_peak
-        File bedgraph_peak_norm = peak_calling.bedgraph_peak_norm
+            File narrow_peak = peak_calling.narrow_peak
+            File bedgraph_peak_norm = peak_calling.bedgraph_peak_norm
+            File bw_peak_norm = peak_calling.bw_peak_norm
     }
 }
 
