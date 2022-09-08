@@ -14,13 +14,13 @@ task cutnrun_deeptools {
         # This task takes in input the bedgraphs for input and ctrl and call peaks.
         Int? cpus = 16
         Int? memory_gb = 64
+        Int? bin_size = 50
         File cleaned_bam
         File chr_sizes
         File tss
         File genes
-        Int? genome_size = 2150570000
         String? normalization = "RPGC"
-        Int? bin_size = 50
+        String? genome_size = "2150570000"
         String? ignore_for_normalization = "chrX"
         String docker_image = "njaved/deeptools"
         String? prefix
