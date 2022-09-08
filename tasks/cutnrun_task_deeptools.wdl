@@ -19,7 +19,7 @@ task cutnrun_deeptools {
         File tss
         File genes
         Int? genome_size = 2150570000
-        String normalization = "RPGC"
+        String? normalization = "RPGC"
         Int? bin_size = 50
         String? ignore_for_normalization = "chrX"
         String docker_image = "njaved/deeptools"
