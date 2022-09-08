@@ -5,6 +5,7 @@ import "tasks/cutnrun_task_bowtie2.wdl" as cutnrun_task_align
 import "tasks/cutnrun_task_bam2bed.wdl" as cutnrun_task_bam2bed
 import "tasks/cutnrun_task_viz.wdl" as cutnrun_task_visualization
 import "tasks/cutnrun_task_peak.wdl" as cutnrun_task_peak_calling
+import "tasks/cutnrun_task_deeptools.wdl" as cutnrun_task_deeptools
 
 workflow wf_cut_and_run {
     meta {
@@ -20,6 +21,8 @@ workflow wf_cut_and_run {
         Array[File] ctrl_fastq_R2
         File idx_tar
         File chrom_sizes
+        File tss
+        File genes
         String? normalization = "norm"
         String? stringency = "relaxed"
         String prefix = "cutnrun-sample"
@@ -79,15 +82,34 @@ workflow wf_cut_and_run {
             prefix = prefix_ctrl
     }
 
-    call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
+#    call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
+#        input:
+#            bedgraph_input = target_track_generation.bedgraph,
+#            bedgraph_ctrl = ctrl_track_generation.bedgraph,
+#            chr_sizes = chrom_sizes,
+#            normalization = normalization,
+#            stringency = stringency,
+#            prefix = prefix
+#    }
+
+    call cutnrun_task_deeptools.cutnrun_deeptools as ctrl_deeptools {
         input:
-            bedgraph_input = target_track_generation.bedgraph,
-            bedgraph_ctrl = ctrl_track_generation.bedgraph,
+            bam = ctrl_bam2bed.clean_bam,
             chr_sizes = chrom_sizes,
-            normalization = normalization,
-            stringency = stringency,
+            tss = tss,
+            genes = genes,
+            prefix = prefix_ctrl
+    }
+
+        call cutnrun_task_deeptools.cutnrun_deeptools as target_deeptools {
+        input:
+            bam = target_bam2bed.clean_bam,
+            chr_sizes = chrom_sizes,
+            tss = tss,
+            genes = genes,
             prefix = prefix
     }
+
 
         output {
             File target_alignment_bam = target_align.cutnrun_alignment
@@ -96,6 +118,9 @@ workflow wf_cut_and_run {
             File target_cleaned_bam = target_bam2bed.clean_bam
             File target_bedgrapgh = target_track_generation.bedgraph
             File target_bigwig = target_track_generation.bigwig
+            File target_deeptools_heatmap_genes = target_deeptools.heatmap_genes
+            File target_deeptools_heatmap_tss = target_deeptools.heatmap_tss
+            File target_deeptools_bw = target_deeptools.cleaned_deeptools_bw
 
             File ctrl_alignment_bam = ctrl_align.cutnrun_alignment
             File ctrl_alignment_log = ctrl_align.cutnrun_alignment_log
@@ -103,10 +128,14 @@ workflow wf_cut_and_run {
             File ctrl_cleaned_bam = ctrl_bam2bed.clean_bam
             File ctrl_bedgrapgh = ctrl_track_generation.bedgraph
             File ctrl_bigwig = ctrl_track_generation.bigwig
+            File ctrl_deeptools_heatmap_genes = ctrl_deeptools.heatmap_genes
+            File ctrl_deeptools_heatmap_tss = ctrl_deeptools.heatmap_tss
+            File ctrl_deeptools_bw = ctrl_deeptools.cleaned_deeptools_bw
 
-            File narrow_peak = peak_calling.narrow_peak
-            File bedgraph_peak_norm = peak_calling.bedgraph_peak_norm
-            File bw_peak_norm = peak_calling.bw_peak_norm
+
+            #File narrow_peak = peak_calling.narrow_peak
+            #File bedgraph_peak_norm = peak_calling.bedgraph_peak_norm
+            #File bw_peak_norm = peak_calling.bw_peak_norm
     }
 }
 
