@@ -52,7 +52,7 @@ task cutnrun_deeptools {
             --skipZeros \
             -o ${prefix}.tss.mat.gz
 
-        computeMatrix scale-region -S ${prefix}.clean.sorted.bw \
+        computeMatrix scale-regions -S ${prefix}.clean.sorted.bw \
             -R ${genes} \
             --beforeRegionStartLength 3000 \
             --afterRegionStartLength 3000 \
