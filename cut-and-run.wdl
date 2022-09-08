@@ -94,7 +94,7 @@ workflow wf_cut_and_run {
 
     call cutnrun_task_deeptools.cutnrun_deeptools as ctrl_deeptools {
         input:
-            bam = ctrl_bam2bed.clean_bam,
+            cleaned_bam = ctrl_bam2bed.clean_bam,
             chr_sizes = chrom_sizes,
             tss = tss,
             genes = genes,
