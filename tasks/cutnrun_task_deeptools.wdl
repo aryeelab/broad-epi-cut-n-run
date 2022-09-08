@@ -34,7 +34,7 @@ task cutnrun_deeptools {
 
 
     command {
-        samtools sort -@ 6 -m 6G ${bam} -o ${prefix}.clean.sorted.bam
+        samtools sort -@ 6 -m 6G ${cleaned_bam} -o ${prefix}.clean.sorted.bam
         samtools index ${prefix}.clean.sorted.bam
 
         bamCoverage --bam ${prefix}.clean.sorted.bam \
