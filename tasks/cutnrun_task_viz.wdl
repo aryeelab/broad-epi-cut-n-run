@@ -15,8 +15,8 @@ task cutnrun_viz {
         Int? cpus = 1
         Int? memory_gb = 16
         File bedpe
-    File chr_sizes
-    String docker_image = "4dndcic/cut-and-run-pipeline:v1"
+        File chr_sizes
+        String docker_image = "4dndcic/cut-and-run-pipeline:v1"
         String? prefix
     }
 
