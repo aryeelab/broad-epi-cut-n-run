@@ -66,8 +66,8 @@ task cutnrun_deeptools {
     }
 
     output {
-        File heatmap_genes = ${prefix}.heatmap.genes.pdf
-        File heatmap_tss = ${prefix}.heatmap.tss.pdf
+        File heatmap_genes = ~{prefix}.heatmap.genes.pdf
+        File heatmap_tss = ~{prefix}.heatmap.tss.pdf
         File cleaned_deeptools_bw = glob('./*.bw')[0]
     }
 
