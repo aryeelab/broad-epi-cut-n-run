@@ -27,7 +27,7 @@ task cutnrun_bam2bed {
 
 
     command {
-        bash run-trim.sh ${default="cutnrun" prefix} . ${bam}
+        bash run-bamtobed.sh ${default="cutnrun" prefix} . ${bam}
     }
 
     output {
