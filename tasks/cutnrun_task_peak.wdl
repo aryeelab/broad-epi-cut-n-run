@@ -32,7 +32,7 @@ task cutnrun_peak {
 
     command {
         bash run-peak.sh ${bedgraph_input} ${bedgraph_ctrl} ${normalization} ${stringency} ${default="cutnrun" prefix}.peak .
-        /usr/local/bin/bedGraphToBigWig ${prefix}.bedgraph ${chr_sizes} ${prefix}.peak.bw
+        /usr/local/bin/bedGraphToBigWig ${prefix}.peak.bedgraph ${chr_sizes} ${prefix}.peak.bw
     }
 
     output {
