@@ -23,7 +23,7 @@ workflow wf_cut_and_run {
         String? normalization = "norm"
         String? stringency = "relaxed"
         String prefix = "cutnrun-sample"
-        String prefix-ctrl = "cutnrun-ctrl"
+        String prefix_ctrl = "cutnrun-ctrl"
         String genome_name
         String? docker
     }
@@ -50,7 +50,7 @@ workflow wf_cut_and_run {
             fastq_R2 = ctrl_fastq_R2,
             genome_index = idx_tar,
             genome_name = genome_name,
-            prefix = prefix-ctrl
+            prefix = prefix_ctrl
     }
 
         call cutnrun_task_bam2bed.cutnrun_bam2bed as target_bam2bed {
@@ -62,7 +62,7 @@ workflow wf_cut_and_run {
         call cutnrun_task_bam2bed.cutnrun_bam2bed as ctrl_bam2bed {
            input:
             bam = ctrl_align.cutnrun_alignment,
-            prefix = prefix-ctrl
+            prefix = prefix_ctrl
         }
 
     call cutnrun_task_visualization.cutnrun_viz as target_track_generation {
@@ -76,7 +76,7 @@ workflow wf_cut_and_run {
         input:
             bedpe = ctrl_bam2bed.bedpe,
             chr_sizes = chrom_sizes,
-            prefix = prefix-ctrl
+            prefix = prefix_ctrl
     }
 
     call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
