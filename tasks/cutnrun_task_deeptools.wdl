@@ -61,7 +61,7 @@ task cutnrun_deeptools {
             --skipZeros \
             -o ${prefix}.genes.mat.gz
 
-        plotHeatmap -m ${prefix}.genes.mat.gz -o ${prefix}.heatmap.tss.pdf
+        plotHeatmap -m ${prefix}.tss.mat.gz -o ${prefix}.heatmap.tss.pdf
         plotHeatmap -m ${prefix}.genes.mat.gz -o ${prefix}.heatmap.genes.pdf
     }
 
