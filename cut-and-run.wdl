@@ -162,7 +162,7 @@ task sort {
     $(which samtools) sort -@ 8 -m 3G $bam -o ${outbam}
   }
   output {
-    File clean_sorted_bam = ${outbam}
+    File clean_sorted_bam = "${outbam}"
   }
   runtime {
     maxRetries : 0
