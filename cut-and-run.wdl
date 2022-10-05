@@ -101,7 +101,7 @@ workflow wf_cut_and_run {
             prefix = prefix_ctrl
     }
 
-        call cutnrun_task_deeptools.cutnrun_deeptools as target_deeptools {
+    call cutnrun_task_deeptools.cutnrun_deeptools as target_deeptools {
         input:
             cleaned_bam = target_bam2bed.clean_bam,
             chr_sizes = chrom_sizes,
@@ -110,12 +110,24 @@ workflow wf_cut_and_run {
             prefix = prefix
     }
 
+    call sort as ctrl_sort{
+        input:
+            cleaned_bam = ctrl_bam2bed.clean_bam,
+            prefix = prefix_ctrl
+    }
+
+    call sort as target_sort{
+        input:
+            cleaned_bam = target_bam2bed.clean_bam,
+            prefix = prefix
+    }
 
         output {
             File target_alignment_bam = target_align.cutnrun_alignment
             File target_alignment_log = target_align.cutnrun_alignment_log
             File target_bedpe = target_bam2bed.bedpe
             File target_cleaned_bam = target_bam2bed.clean_bam
+            File target_cleaned_sorted_bam = target_sort.clean_sorted_bam
             File target_bedgrapgh = target_track_generation.bedgraph
             File target_bigwig = target_track_generation.bigwig
             File target_deeptools_heatmap_genes = target_deeptools.heatmap_genes
@@ -126,6 +138,7 @@ workflow wf_cut_and_run {
             File ctrl_alignment_log = ctrl_align.cutnrun_alignment_log
             File ctrl_bedpe = ctrl_bam2bed.bedpe
             File ctrl_cleaned_bam = ctrl_bam2bed.clean_bam
+            File ctrl_cleaned_sorted_bam = ctrl_sort.clean_sorted_bam
             File ctrl_bedgrapgh = ctrl_track_generation.bedgraph
             File ctrl_bigwig = ctrl_track_generation.bigwig
             File ctrl_deeptools_heatmap_genes = ctrl_deeptools.heatmap_genes
@@ -139,3 +152,22 @@ workflow wf_cut_and_run {
     }
 }
 
+task sort {
+  input {
+    String prefix
+    File bam
+  }
+  command {
+        samtools sort -@ 8 -m 1.5G $bam -o ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
+  }
+  output {
+    File clean_sorted_bam = ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
+  }
+  runtime {
+    maxRetries : 0
+    cpu : 8
+    memory : '16 GB'
+    disks : 'local-disk 100 SSD'
+    docker : 'us.gcr.io/buenrostro-share-seq/share_task_star'
+  }
+}
