@@ -158,7 +158,7 @@ task sort {
     File cleaned_bam
   }
   command {
-        samtools sort -@ 8 -m 1.5G $bam -o ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
+        samtools sort -@ 8 -m 3G $bam -o ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
   }
   output {
     File clean_sorted_bam = "${default="cutnrun" prefix}.dedup.cleaned.sorted.bam"
@@ -166,7 +166,7 @@ task sort {
   runtime {
     maxRetries : 0
     cpu : 8
-    memory : '16 GB'
+    memory : '32 GB'
     disks : 'local-disk 100 SSD'
     docker : 'us.gcr.io/buenrostro-share-seq/share_task_star'
   }
