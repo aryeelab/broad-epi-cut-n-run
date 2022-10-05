@@ -157,11 +157,12 @@ task sort {
     String prefix
     File cleaned_bam
   }
+  String outbam = '${default="cutnrun" prefix}.dedup.cleaned.sorted.bam'
   command {
-        samtools sort -@ 8 -m 3G $bam -o ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
+    $(which samtools) sort -@ 8 -m 3G $bam -o ${outbam}
   }
   output {
-    File clean_sorted_bam = "${default="cutnrun" prefix}.dedup.cleaned.sorted.bam"
+    File clean_sorted_bam = ${outbam}
   }
   runtime {
     maxRetries : 0
