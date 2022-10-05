@@ -161,7 +161,7 @@ task sort {
         samtools sort -@ 8 -m 1.5G $bam -o ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
   }
   output {
-    File clean_sorted_bam = ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
+    File clean_sorted_bam = "${default="cutnrun" prefix}.dedup.cleaned.sorted.bam"
   }
   runtime {
     maxRetries : 0
