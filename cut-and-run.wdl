@@ -155,7 +155,7 @@ workflow wf_cut_and_run {
 task sort {
   input {
     String prefix
-    File bam
+    File cleaned_bam
   }
   command {
         samtools sort -@ 8 -m 1.5G $bam -o ${default="cutnrun" prefix}.dedup.cleaned.sorted.bam
