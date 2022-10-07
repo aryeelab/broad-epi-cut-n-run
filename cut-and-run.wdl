@@ -82,15 +82,15 @@ workflow wf_cut_and_run {
             prefix = prefix_ctrl
     }
 
-#    call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
-#        input:
-#            bedgraph_input = target_track_generation.bedgraph,
-#            bedgraph_ctrl = ctrl_track_generation.bedgraph,
-#            chr_sizes = chrom_sizes,
-#            normalization = normalization,
-#            stringency = stringency,
-#            prefix = prefix
-#    }
+    call cutnrun_task_peak_calling.cutnrun_peak as peak_calling {
+        input:
+            bedgraph_input = target_track_generation.bedgraph,
+            bedgraph_ctrl = ctrl_track_generation.bedgraph,
+            chr_sizes = chrom_sizes,
+            normalization = normalization,
+            stringency = stringency,
+            prefix = prefix
+    }
 
     call cutnrun_task_deeptools.cutnrun_deeptools as ctrl_deeptools {
         input:
