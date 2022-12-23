@@ -17,7 +17,6 @@ task cutnrun_deeptools {
         Int? bin_size = 50
         File cleaned_bam
         File chr_sizes
-        File tss
         File genes
         String? normalization = "RPGC"
         String? genome_size = "2150570000"
@@ -44,14 +43,6 @@ task cutnrun_deeptools {
             --effectiveGenomeSize ${genome_size} \
             --ignoreForNormalization ${ignore_for_normalization}
 
-        computeMatrix reference-point -S ${prefix}.clean.sorted.bw \
-            -R ${tss} \
-            --beforeRegionStartLength 3000 \
-            --afterRegionStartLength 3000 \
-            -p 16 \
-            --skipZeros \
-            -o ${prefix}.tss.mat.gz
-
         computeMatrix scale-regions -S ${prefix}.clean.sorted.bw \
             -R ${genes} \
             --beforeRegionStartLength 3000 \
@@ -61,13 +52,11 @@ task cutnrun_deeptools {
             --skipZeros \
             -o ${prefix}.genes.mat.gz
 
-        plotHeatmap -m ${prefix}.tss.mat.gz -o ${prefix}.heatmap.tss.pdf
         plotHeatmap -m ${prefix}.genes.mat.gz -o ${prefix}.heatmap.genes.pdf
     }
 
     output {
         File heatmap_genes = "${prefix}.heatmap.genes.pdf"
-        File heatmap_tss = "${prefix}.heatmap.tss.pdf"
         File cleaned_deeptools_bw = glob('./*.bw')[0]
     }
 

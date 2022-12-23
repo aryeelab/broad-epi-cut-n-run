@@ -21,7 +21,6 @@ workflow wf_cut_and_run {
         Array[File] ctrl_fastq_R2
         File idx_tar
         File chrom_sizes
-        File tss
         File genes
         String? normalization = "norm"
         String? stringency = "relaxed"
@@ -96,7 +95,6 @@ workflow wf_cut_and_run {
         input:
             cleaned_bam = ctrl_bam2bed.clean_bam,
             chr_sizes = chrom_sizes,
-            tss = tss,
             genes = genes,
             prefix = prefix_ctrl
     }
@@ -105,7 +103,6 @@ workflow wf_cut_and_run {
         input:
             cleaned_bam = target_bam2bed.clean_bam,
             chr_sizes = chrom_sizes,
-            tss = tss,
             genes = genes,
             prefix = prefix
     }
@@ -131,7 +128,6 @@ workflow wf_cut_and_run {
             File target_bedgrapgh = target_track_generation.bedgraph
             File target_bigwig = target_track_generation.bigwig
             File target_deeptools_heatmap_genes = target_deeptools.heatmap_genes
-            File target_deeptools_heatmap_tss = target_deeptools.heatmap_tss
             File target_deeptools_bw = target_deeptools.cleaned_deeptools_bw
 
             File ctrl_alignment_bam = ctrl_align.cutnrun_alignment
@@ -142,7 +138,6 @@ workflow wf_cut_and_run {
             File ctrl_bedgrapgh = ctrl_track_generation.bedgraph
             File ctrl_bigwig = ctrl_track_generation.bigwig
             File ctrl_deeptools_heatmap_genes = ctrl_deeptools.heatmap_genes
-            File ctrl_deeptools_heatmap_tss = ctrl_deeptools.heatmap_tss
             File ctrl_deeptools_bw = ctrl_deeptools.cleaned_deeptools_bw
 
 
