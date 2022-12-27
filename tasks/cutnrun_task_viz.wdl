@@ -28,6 +28,7 @@ task cutnrun_viz {
 
 
     command {
+        bedtools genomecov -i ${bedpe} -g ${chr_sizes} -bg > ${prefix}.bedgraph 
         bash run-viz.sh ${bedpe} ${chr_sizes} '' ${default="cutnrun" prefix} .
     }
 
