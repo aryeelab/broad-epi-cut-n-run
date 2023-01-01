@@ -12,7 +12,7 @@ task cutnrun_align {
 
     input {
         # This task takes in input the preprocessed fastqs and align them to the genome.
-        Int? cpus = 16
+        Int? cpus = 6
         Int? memory_gb = 64
         Array[File] fastq_R1
         Array[File] fastq_R2
