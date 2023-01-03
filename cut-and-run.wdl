@@ -141,9 +141,9 @@ workflow wf_cut_and_run {
             File ctrl_deeptools_bw = ctrl_deeptools.cleaned_deeptools_bw
 
 
-            #File narrow_peak = peak_calling.narrow_peak
-            #File bedgraph_peak_norm = peak_calling.bedgraph_peak_norm
-            #File bw_peak_norm = peak_calling.bw_peak_norm
+            File narrow_peak = peak_calling.narrow_peak
+            File bedgraph_peak_norm = peak_calling.bedgraph_peak_norm
+            File bw_peak_norm = peak_calling.bw_peak_norm
     }
 }
 
